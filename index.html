@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسعار العملات من البنك الأهلي</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; direction: rtl; }
+        table { width: 50%; margin: auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background-color: #0074D9; color: white; }
+    </style>
+</head>
+<body>
+    <h1>أسعار العملات من البنك الأهلي المصري</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>العملة</th>
+                <th>شراء</th>
+                <th>بيع</th>
+            </tr>
+        </thead>
+        <tbody id="currencyTable"></tbody>
+    </table>
+    <p>آخر تحديث: <span id="lastUpdated">جاري التحديث...</span></p>
+
+    <script>
+        async function fetchRates() {
+            try {
+                let response = await fetch("https://www.nbe.com.eg/api/forex"); // رابط البنك الأهلي
+                let data = await response.json();
+
+                let table = document.getElementById("currencyTable");
+                table.innerHTML = "";
+
+                data.forEach(currency => {
+                    let row = `<tr>
+                        <td>${currency.name}</td>
+                        <td>${currency.buy_price}</td>
+                        <td>${currency.sell_price}</td>
+                    </tr>`;
+                    table.innerHTML += row;
+                });
+
+                document.getElementById("lastUpdated").innerText = new Date().toLocaleTimeString();
+            } catch (error) {
+                document.getElementById("currencyTable").innerHTML = `<tr><td colspan="3">خطأ في جلب البيانات</td></tr>`;
+            }
+        }
+
+        fetchRates();
+        setInterval(fetchRates, 30000); // تحديث كل 30 ثانية
+    </script>
+</body>
+</html>
