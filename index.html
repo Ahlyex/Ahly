@@ -28,7 +28,44 @@
                 document.getElementById("currencyTable").innerHTML = `<tr><td colspan="3">خطأ في جلب البيانات</td></tr>`;
             }
         }
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شريط الأخبار المتحرك</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; direction: rtl; }
+        .news-container {
+            width: 100%;
+            overflow: hidden;
+            background: #0074D9;
+            color: white;
+            padding: 10px 0;
+            white-space: nowrap;
+            position: relative;
+        }
+        .news {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollText 15s linear infinite;
+        }
+        @keyframes scrollText {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
 
+    <div class="news-container">
+        <div class="news" id="newsTicker">
+            🔴 تحديث أسعار العملات | 🟢 موقع البنك الأهلي المصري | 🔵 تابع آخر الأخبار المالية
+        </div>
+    </div>
+
+</body>
+</html>
         fetchRates();
         setInterval(fetchRates, 30000); // تحديث كل 30 ثانية
     </script>
